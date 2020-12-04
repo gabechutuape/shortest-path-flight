@@ -23,7 +23,35 @@ P2: ACTUAL STUFF
 */
 
 class Assembler{
+    public:
+        /**
+         * Constructor for Assembler
+         * Takes in file paths as strings for the three required files
+         */ 
+        Assembler(const std::string& airport_file, const std::string& airline_file, const std::string& route_file);
 
+        /**
+         * Destructor
+         */ 
+        ~Assembler();
+
+        /**
+         * Copy constructor
+         */ 
+        Assembler(const Assembler& other);
+
+        /**
+         * Copy assignment
+         */ 
+        Assembler& operator=(const Assembler& other);
+
+    private:
+        void Copy(const Assembler& other);
+        void Delete();
+
+        std::string airport_file_;
+        std::string airline_file_;
+        std::string route_file_;
 };
 
 #endif //ASSEMBLER_H
