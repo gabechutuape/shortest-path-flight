@@ -52,6 +52,12 @@ class Assembler{
         std::string airport_file_;
         std::string airline_file_;
         std::string route_file_;
+
+        /**
+         * Function for parsing elements from line in CSV file.
+         * Returns a vector with each comma separated value as a string as elements.
+         */
+        std::vector<std::string> ParseLine(const std::string &line);
 };
 
 #endif //ASSEMBLER_H

@@ -26,6 +26,42 @@ Assembler& Assembler::operator=(const Assembler& other){
     return *this;
 }
 
+vector<string> Assembler::ParseLine(const string &line){
+    char current_character;
+    string current_string;
+    bool quotation_flag;
+    vector<string> line_elements;
+
+    // Loop through all characters of line
+    for(size_t i = 0; i < line.size(); ++i){
+        current_character = line[i]; 
+
+        // If the previous character is a quotation mark:
+        if(quotation_flag){
+            if( i+1 < line.size() ){
+                if( line[i+1] == '"' ){
+                    current_string += '"';
+                    ++i;
+                }
+                quotation_flag = false;
+            }
+            current_string += current_character;
+        }
+        // If the previous character is not a quotation mark:
+        else{
+            if( current_character == '"' ){
+                quotation_flag = true;
+            }
+            else if( current_character == ',' ){
+                line_elements.push_back(current_string);
+                current_string.clear();
+            }
+            current_string += current_character;
+        }
+    }
+    return line_elements;
+}
+
 void Assembler::Delete(){
     airport_file_.clear();
     airline_file_.clear();
