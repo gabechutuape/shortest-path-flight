@@ -29,7 +29,7 @@ Assembler& Assembler::operator=(const Assembler& other){
 vector<string> Assembler::ParseLine(const string &line){
     char current_character;
     string current_string;
-    bool quotation_flag;
+    bool quotation_flag == false;
     vector<string> line_elements;
 
     // Loop through all characters of line
