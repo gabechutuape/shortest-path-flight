@@ -2,7 +2,7 @@
 
 ### Dataset
 - Our dataset of interest is the OpenFlights open source dataset of flight routes and
-airports, from ​ https://openflights.org/data.html​.
+airports, from ​ https://openflights.org/data
 ### Abstract Goal
 - Our goal, at an abstract level of explanation, is to use this dataset of flight routes
 and airports to discover shortest paths between airports.  
