@@ -19,6 +19,11 @@
 - [ ] Landmark Path Algorithm Implementation
   - [ ] Figure out how to apply Landmark Path Algorithm using data from our CSVs to project specification
 
+- [ ] Airlines and Airports
+  - How do we know what airlines service what airports?
+  - Using whatever airlines service whatever airports, how can we use that information to get a user from airport A to airport B?
+  - How do we tie together the information from OpenFlights between airlines and airports?
+
 ### Project Output
 - [ ] Output user requested information in console
   - [ ] Obtain user requested information in usable format
