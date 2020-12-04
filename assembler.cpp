@@ -36,16 +36,20 @@ vector<string> Assembler::ParseLine(const string &line){
     for(size_t i = 0; i < line.size(); ++i){
         current_character = line[i]; 
 
-        // If the previous character is a quotation mark:
+        // If the previous character is a quotation mark,
         if(quotation_flag){
             if( i+1 < line.size() ){
                 if( line[i+1] == '"' ){
                     current_string += '"';
                     ++i;
                 }
+                else {
                 quotation_flag = false;
+                }
             }
+            else {
             current_string += current_character;
+            }
         }
         // If the previous character is not a quotation mark:
         else{
@@ -56,7 +60,9 @@ vector<string> Assembler::ParseLine(const string &line){
                 line_elements.push_back(current_string);
                 current_string.clear();
             }
+            else {
             current_string += current_character;
+            }
         }
     }
     return line_elements;
