@@ -44,11 +44,11 @@ vector<string> Assembler::ParseLine(const string &line){
                     ++i;
                 }
                 else {
-                quotation_flag = false;
+                    quotation_flag = false;
                 }
             }
             else {
-            current_string += current_character;
+                current_string += current_character;
             }
         }
         // If the previous character is not a quotation mark:
@@ -61,7 +61,7 @@ vector<string> Assembler::ParseLine(const string &line){
                 current_string.clear();
             }
             else {
-            current_string += current_character;
+                current_string += current_character;
             }
         }
     }
