@@ -29,7 +29,7 @@ Assembler& Assembler::operator=(const Assembler& other){
 vector<string> Assembler::ParseLine(const string &line){
     char current_character;
     string current_string;
-    bool quotation_flag == false;
+    bool quotation_flag = false;
     vector<string> line_elements;
 
     // Loop through all characters of line
@@ -38,7 +38,7 @@ vector<string> Assembler::ParseLine(const string &line){
 
         // If the previous character is a quotation mark,
         if(quotation_flag){
-            if( i+1 < line.size() ){
+            if( current_character == '"' && i+1 < line.size() ){
                 if( line[i+1] == '"' ){
                     current_string += '"';
                     ++i;
