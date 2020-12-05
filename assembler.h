@@ -2,6 +2,7 @@
 #include <vector>
 #include <cmath>
 #include <unordered_map>
+#include <map>
 
 #ifndef ASSEMBLER_H
 #define ASSEMBLER_H
@@ -55,6 +56,8 @@ class Assembler{
         std::string route_file_;
 
         std::unordered_map<int, std::string> airline_ID_to_name_;
+        std::map<int, node> airport_map_;
+        std::unordered_map<std::string, int> airport_code_to_ID_;
 
 
         /**
@@ -80,6 +83,27 @@ class Assembler{
          * Uses airline_file_ to insert into airline_ID_to_name_
          */ 
         void PopulateIdToName();
+
+        /**
+         * Populates map of airport IDs to airport nodes
+         * Populates hash map of airport codes to IDs
+         * Reads from airport_file_ and updates airport_map_ and airport_code_to_ID_
+         */ 
+        void PopulateAirportMapAndCodeToID();
+};
+
+struct node{
+    int id;
+    std::string name;
+    double latitude;
+    double longitude;
+    std::string airport_code;
+};
+
+struct edge{
+    int start_id;
+    int end_id;
+    double distance;
 };
 
 #endif //ASSEMBLER_H

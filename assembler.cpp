@@ -102,6 +102,36 @@ void Assembler::PopulateIdToName(){
     inputFile.close();
 }
 
+void Assembler::PopulateAirportMapAndCodeToID(){
+    ifstream inputFile(airport_file_);
+    string line;
+
+    enum airport_file{ //corresponds to the CSV file entries
+        ID = 0,
+        NAME = 1,
+        CODE = 4,
+        LATITUDE = 6,
+        LONGITUDE = 7
+    };
+
+    while(getline(inputFile, line)){
+        vector<string> parsed_line = ParseLine(line);
+
+        node airport_node;
+        
+        airport_node.id = stoi(parsed_line[ID]);
+        airport_node.name = parsed_line[NAME];
+        airport_node.latitude = stoi(parsed_line[LATITUDE]);
+        airport_node.longitude = stoi(parsed_line[LONGITUDE]);
+        airport_node.airport_code = parsed_line[CODE];
+
+        airport_map_.insert(pair<int, node>(airport_node.id, airport_node));
+        airport_code_to_ID_.insert(pair<string, int>(airport_node.airport_code, airport_node.id));
+    }
+
+    inputFile.close();
+}
+
 void Assembler::Delete(){
     airport_file_.clear();
     airline_file_.clear();
