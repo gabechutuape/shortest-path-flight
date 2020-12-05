@@ -1,6 +1,6 @@
 #include <fstream>
 #include <vector>
-
+#include <cmath>
 
 #ifndef ASSEMBLER_H
 #define ASSEMBLER_H
@@ -58,6 +58,17 @@ class Assembler{
          * Returns a vector with each comma separated value as a string as elements.
          */
         std::vector<std::string> ParseLine(const std::string &line);
+        /**
+         * Function calculates and returns distance from 2 latitude and longitudes
+         * Uses haversine formula
+         * 
+         * @param lat1 airport 1's latitude
+         * @param long1 airpot 1's longitude
+         * @param lat2 airport 2's latitude
+         * @param long2 airport 2's longitude
+         * @return the distance in miles
+         */ 
+        double GetDistance(double lat1, double long1, double lat2, double long2);
 };
 
 #endif //ASSEMBLER_H

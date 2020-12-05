@@ -67,7 +67,25 @@ vector<string> Assembler::ParseLine(const string &line){
     }
     return line_elements;
 }
+double Assembler::GetDistance(double lat1, double long1, double lat2, double long2){
+    double latitude_1 = lat1 * M_PI / 180.;
+    double longitude_1 = long1 * M_PI / 180.;
+    double latitude_2 = lat2 * M_PI / 180.;
+    double longitude_2 = long2 * M_PI / 180.;
 
+    double difLat = abs(latitude_1 - latitude_2);
+    double difLong = abs(longitude_1 - longitude_2);
+
+    double a = pow(sin(difLat / 2), 2) + (cos(latitude_1) * cos(latitude_2) * pow(sin(difLong / 2), 2)); //square of half the chord length 
+
+    double c = 2 * atan2(sqrt(a), sqrt(1-a)); //angular distance in radians
+
+    const double kEarthRadius = 3958.8; //in miles
+
+    double distance = c * kEarthRadius;
+
+    return distance;
+}
 void Assembler::Delete(){
     airport_file_.clear();
     airline_file_.clear();
