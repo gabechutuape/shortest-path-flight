@@ -1,6 +1,7 @@
 #include <fstream>
 #include <vector>
 #include <cmath>
+#include <unordered_map>
 
 #ifndef ASSEMBLER_H
 #define ASSEMBLER_H
@@ -53,12 +54,15 @@ class Assembler{
         std::string airline_file_;
         std::string route_file_;
 
+        std::unordered_map<int, std::string> airline_ID_to_name_;
+
+
         /**
          * Function for parsing elements from line in CSV file.
          * Returns a vector with each comma separated value as a string as elements.
          */
         std::vector<std::string> ParseLine(const std::string &line);
-        
+
         /**
          * Function calculates and returns distance from 2 latitude and longitudes
          * Uses haversine formula
@@ -70,6 +74,12 @@ class Assembler{
          * @return the distance in miles
          */ 
         double GetDistance(double lat1, double long1, double lat2, double long2);
+
+        /**
+         * Populates the hash table of airline id's to airline names
+         * Uses airline_file_ to insert into airline_ID_to_name_
+         */ 
+        void PopulateIdToName();
 };
 
 #endif //ASSEMBLER_H

@@ -6,7 +6,8 @@ Assembler::Assembler(const std::string& airport_file, const std::string& airline
     airport_file_ = airport_file;
     airline_file_ = airline_file;
     route_file_ = route_file;
-    //Add a function for constructing graph
+    //Add functions for constructing graph
+    PopulateIdToName();
 }
 
 Assembler::~Assembler(){
@@ -86,6 +87,21 @@ double Assembler::GetDistance(double lat1, double long1, double lat2, double lon
 
     return distance;
 }
+
+void Assembler::PopulateIdToName(){
+    ifstream inputFile(airline_file_);
+    string line;
+
+    while(getline(inputFile, line)){
+
+        vector<string> parsed_line = ParseLine(line); //Line of CSV turns into vector of parsed strings
+
+        airline_ID_to_name_.insert(pair<int, string>(stoi(parsed_line[0]), parsed_line[1])); //1st element should be id, 2nd the name
+    }
+
+    inputFile.close();
+}
+
 void Assembler::Delete(){
     airport_file_.clear();
     airline_file_.clear();
