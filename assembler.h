@@ -58,6 +58,7 @@ class Assembler{
          * Returns a vector with each comma separated value as a string as elements.
          */
         std::vector<std::string> ParseLine(const std::string &line);
+        
         /**
          * Function calculates and returns distance from 2 latitude and longitudes
          * Uses haversine formula

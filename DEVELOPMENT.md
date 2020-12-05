@@ -9,3 +9,6 @@ project cohesion and I copied our project goals to our README.md so that our Git
 ### Progress 12/4 (dimitar3)
 I created the assembler class and associated header and cpp files. I implemented the ctor, copy ctor, copy assignment and destructor
 for this class. As well as creating the three instance variables for file names for our three data files.
+
+### Progress 12/5 (dimitar3)
+Created and implemented a function that calculates distance between two points on Earth using haversine formula.
