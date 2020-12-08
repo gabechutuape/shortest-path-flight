@@ -3,7 +3,7 @@
 ### File Operations
 - [x] Reading CSV files
   - Identifying the data we use in our CSV will be in a .h file of some kind
-- [ ] Handling CSV files
+- [x] Handling CSV files
   - This follows the same idea as the previous tickbox
 
 ### Logic Operations
