@@ -131,6 +131,57 @@ void Assembler::PopulateAirportMapAndCodeToID(){
 
     inputFile.close();
 }
+void Assembler::PopulateRouteMap(){
+    ifstream inputFile(airport_file_);
+    string line;
+
+    enum route_file{ //corresponds to the CSV file entries
+        AIRLINE_ID = 1,
+        SOURCE_ID = 3,
+        DESTINATION_IATA = 4,
+        DESTINATION_ID = 5
+    };
+
+    while(getline(inputFile, line)){
+        vector<string> parsed_line = ParseLine(line);
+
+        int source_id = stoi(parsed_line[SOURCE_ID]);
+        int dest_id = stoi(parsed_line[DESTINATION_ID]);
+
+        //If source and destination exist: add to route_map_
+        if (airport_map_.find(source_id) != airport_map_.end() && 
+        airport_map_.find(dest_id) != airport_map_.end())
+        {
+            edge route;
+
+            //Creates blank entry if a previous one didn't exist
+            if (route_map_.find(source_id) == route_map_.end())
+            {
+                route_map_.insert(pair<int, vector<edge>>(source_id, vector<edge>()));
+            }
+
+            route.start_id = source_id;
+            route.end_id = dest_id;
+            route.airport_code = parsed_line[DESTINATION_IATA];
+            route.airline_id = stoi(parsed_line[AIRLINE_ID]);
+
+            //Check if airport exists
+            if (airline_ID_to_name_.find(route.airline_id) != airline_ID_to_name_.end())
+            {
+                route.airline_name = airline_ID_to_name_[route.airline_id];
+            }
+            else{
+                route.airline_name = "Unknown Airline";
+            }
+
+            route.distance = GetDistance(airport_map_[source_id].latitude, airport_map_[source_id].longitude,
+             airport_map_[dest_id].latitude, airport_map_[dest_id].longitude);
+
+            route_map_[source_id].push_back(route); //places route in proper edge vector
+        }
+    }
+    inputFile.close();
+}
 
 void Assembler::Delete(){
     airport_file_.clear();

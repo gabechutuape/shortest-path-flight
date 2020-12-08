@@ -58,6 +58,7 @@ class Assembler{
         std::unordered_map<int, std::string> airline_ID_to_name_;
         std::map<int, node> airport_map_;
         std::unordered_map<std::string, int> airport_code_to_ID_;
+        std::unordered_map<int, std::vector<edge>> route_map_;
 
 
         /**
@@ -90,6 +91,12 @@ class Assembler{
          * Reads from airport_file_ and updates airport_map_ and airport_code_to_ID_
          */ 
         void PopulateAirportMapAndCodeToID();
+
+        /**
+         * Populates hash map of airport id's to edges
+         * Reads from route_file_ and writes to route_map_;
+         */
+        void PopulateRouteMap();
 };
 
 struct node{
@@ -101,9 +108,12 @@ struct node{
 };
 
 struct edge{
-    int start_id;
-    int end_id;
+    int start_id; //source - unique openflights identifier
+    int end_id; //destination - unique openflights identifier
     double distance;
+    std::string airport_code;
+    int airline_id;
+    std::string airline_name;
 };
 
 #endif //ASSEMBLER_H
