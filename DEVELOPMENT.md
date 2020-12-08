@@ -16,3 +16,8 @@ Created a hash map that maps airline ids to airline names and a function that po
 Created a map that maps airport ids to nodes and a hash map that maps airport codes to ids and 
 a function that populates both using airport_file_.
 Created structs for nodes and edges to be used in graph later. 
+
+### Progress 12/8 (dimitar3)
+Created and implemented a function that reads from route_file_ and populates a new hashmap "route_map_". This
+is our adjacency list. Modified edge node to include more data for the route_map_, which maps airline id's to 
+edges (routes).
