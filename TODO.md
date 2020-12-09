@@ -13,13 +13,13 @@
   - The idea to remember is that we're also trying to find the "shortest path" between them.
   - This applies to all the algorithms.
 
-- [ ] Dijkstra's Algorithm Implementation
-  - [ ] Figure out how to apply Dijkstra's Algorithm using data from our CSVs to project specification
+- [x] Dijkstra's Algorithm Implementation
+  - [ x Figure out how to apply Dijkstra's Algorithm using data from our CSVs to project specification
 
-- [ ] Landmark Path Algorithm Implementation
-  - [ ] Figure out how to apply Landmark Path Algorithm using data from our CSVs to project specification
+- [x] Landmark Path Algorithm Implementation
+  - [x] Figure out how to apply Landmark Path Algorithm using data from our CSVs to project specification
 
-- [ ] Airlines and Airports
+- [x] Airlines and Airports
   - How do we know what airlines service what airports?
   - Using whatever airlines service whatever airports, how can we use that information to get a user from airport A to airport B?
   - How do we tie together the information from OpenFlights between airlines and airports?
