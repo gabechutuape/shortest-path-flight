@@ -117,6 +117,10 @@ class Assembler{
          */ 
         std::vector<edge> FindEdges(int first_id, int second_id);
 
+        /**
+         * Finds the shortest path between 3 points
+         * Uses FindShortestPath twice and concatenates the resulting vector
+         */ 
         std::vector<std::string> FindLandMarkPath(const std::string& begin, const std::string& mid, const std::string& end);
 
 };

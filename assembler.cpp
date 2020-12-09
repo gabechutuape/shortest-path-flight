@@ -314,5 +314,17 @@ void Assembler::Delete(){
     airport_file_.clear();
     airline_file_.clear();
     route_file_.clear();
-    //add more to delete graph
+    airline_ID_to_name_.clear();
+    airport_map_.clear();
+    route_map_.clear();
+    airport_code_to_ID_.clear();
+}
+void Assembler::Copy(const Assembler& other) {
+    airport_file_ = other.airport_file_;
+    airline_file_ = other.airline_file_;
+    route_file_ = other.route_file_;
+    airline_ID_to_name_ = other.airline_ID_to_name_;
+    airport_map_ = other.airport_map_;
+    route_map_ = other.route_map_;
+    airport_code_to_ID_ = other.airport_code_to_ID_;
 }
