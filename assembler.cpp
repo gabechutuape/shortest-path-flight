@@ -196,7 +196,7 @@ vector<edge> Assembler::FindEdges(int first_id, int second_id){
     return matching_edges;
 }
 
-std::vector<std::string> Assembler::FindShortestPath(const std::string& begin, const std::string& end){
+vector<string> Assembler::FindShortestPath(const std::string& begin, const std::string& end){
     //Existence checks
     if (airport_code_to_ID_.find(begin) == airport_code_to_ID_.end())
     {
@@ -294,6 +294,19 @@ void Assembler::PopulateTrip(std::deque<int>& path, std::vector<std::string>& tr
         }
         path.pop_front();   
     }
+}
+
+vector<string> Assembler::FindLandMarkPath(const std::string& begin, const std::string& mid, const std::string& end){
+    vector<string> first_path = FindShortestPath(begin, mid);
+    vector<string> second_path = FindShortestPath(mid, end);
+    vector<string> total_path;
+
+    total_path.reserve(first_path.size() + second_path.size());
+    
+    total_path.insert(total_path.end(), first_path.begin(), first_path.end());
+    total_path.insert(total_path.end(), second_path.begin(), second_path.end());
+
+    return total_path;
 }
 
 

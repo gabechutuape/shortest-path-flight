@@ -117,6 +117,8 @@ class Assembler{
          */ 
         std::vector<edge> FindEdges(int first_id, int second_id);
 
+        std::vector<std::string> FindLandMarkPath(const std::string& begin, const std::string& mid, const std::string& end);
+
 };
 
 struct node{
