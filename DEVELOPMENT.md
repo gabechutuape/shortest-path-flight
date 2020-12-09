@@ -21,3 +21,7 @@ Created structs for nodes and edges to be used in graph later.
 Created and implemented a function that reads from route_file_ and populates a new hashmap "route_map_". This
 is our adjacency list. Modified edge node to include more data for the route_map_, which maps airline id's to 
 edges (routes).
+
+### Progress 12/9 (dimitar3)
+Created a function that finds edges between nodes. Implemented Dijkstra's algorithm to find shortest path between airports
+using route_map_ as the adjacency list for the graph. This function returns a vector of strings containing info about which route is taken and how much distance between them. I created a helper function that populates this vector of strings. Using the shortest path algo, I implemented a landmark path function. Then I added to the delete function and created the copy function.  
