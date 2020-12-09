@@ -183,6 +183,120 @@ void Assembler::PopulateRouteMap(){
     inputFile.close();
 }
 
+vector<edge> Assembler::FindEdges(int first_id, int second_id){
+    vector<edge> connecting_edges = route_map_[first_id];
+    vector<edge> matching_edges;
+    for (size_t i = 0; i < connecting_edges.size(); i++)
+    {
+        if (connecting_edges[i].end_id == second_id)
+        {
+            matching_edges.push_back(connecting_edges[i]);
+        }
+    }
+    return matching_edges;
+}
+
+std::vector<std::string> Assembler::FindShortestPath(const std::string& begin, const std::string& end){
+    //Existence checks
+    if (airport_code_to_ID_.find(begin) == airport_code_to_ID_.end())
+    {
+        throw "Beginning not found";
+    }
+    if (airport_code_to_ID_.find(end) == airport_code_to_ID_.end())
+    {
+        throw "End not found";
+    }
+    int start_id = airport_code_to_ID_[begin];
+    int end_id = airport_code_to_ID_[end];
+    
+    priority_queue<pair<double, edge>> prior_queue;
+    unordered_set<int> traversed;
+    unordered_map<int, int> parent_id;
+    
+    vector<edge> connecting_edges = route_map_[start_id];
+    traversed.insert(start_id);
+
+    //initial case
+    for (size_t i = 0; i < connecting_edges.size(); i++)
+    {
+        prior_queue.push(pair<double, edge>(-1 * connecting_edges[i].distance, connecting_edges[i]));
+    }
+    
+    int next_id = -1;
+    double next_distance;
+
+    while (!prior_queue.empty() && next_id != end_id)
+    {
+        next_distance = prior_queue.top().first;
+        next_id = prior_queue.top().second.end_id;
+        edge temp = prior_queue.top().second;
+        prior_queue.pop();
+
+        if (traversed.find(next_id) == traversed.end())
+        {
+            parent_id.insert(pair<int,int>(temp.end_id, temp.start_id));
+            connecting_edges = route_map_[next_id];
+            for (size_t i = 0; i < connecting_edges.size(); i++)
+            {
+                prior_queue.push(pair<double, edge>(-1 * connecting_edges[i].distance + next_distance, connecting_edges[i]));
+            }
+            traversed.insert(next_id);
+        }
+    }
+    //If no possible route
+    if (prior_queue.empty() && next_id != end_id)
+    {
+        throw "No possible route";
+    }
+    deque<int> path;
+    int parent = end_id;
+    while (parent != start_id)
+    {
+        path.push_front(parent);
+        parent = parent_id[parent];
+    }
+    path.push_front(parent);
+
+    vector<string> trip;
+    PopulateTrip(path, trip);
+    return trip;
+}
+
+void Assembler::PopulateTrip(std::deque<int>& path, std::vector<std::string>& trip){
+    string cur_string;
+    int previous_code = path.front();
+    cur_string = "Start from " + airport_map_[previous_code].airport_code + " (" + airport_map_[previous_code].name + ")";
+    trip.push_back(cur_string);
+    path.pop_front();
+
+    while(path.size() != 0){
+        vector<edge> connecting_routes = FindEdges(previous_code, path.front());
+        cur_string = "Fly to " + airport_map_[path.front()].airport_code + " (" + airport_map_[path.front()].name +
+         ") flying " + to_string(connecting_routes[0].distance) + " miles using ";
+        if (connecting_routes.size() == 1)
+        {
+            cur_string += connecting_routes[0].airline_name;
+        }
+        else
+        {
+            cur_string += "one of the following: ";
+            for (size_t i = 0; i < connecting_routes.size(); i++)
+            {
+                cur_string += "\n - " + connecting_routes[i].airline_name;
+            }
+        }
+        trip.push_back(cur_string);
+        previous_code = path.front();
+        if (path.size() == 1)
+        {
+            cur_string = "Land at " + airport_map_[path.front()].airport_code + " (" + airport_map_[path.front()].name + ")";
+            trip.push_back(cur_string);
+        }
+        path.pop_front();   
+    }
+}
+
+
 void Assembler::Delete(){
     airport_file_.clear();
     airline_file_.clear();

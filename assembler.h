@@ -3,6 +3,8 @@
 #include <cmath>
 #include <unordered_map>
 #include <map>
+#include <queue>
+#include <unordered_set>
 
 #ifndef ASSEMBLER_H
 #define ASSEMBLER_H
@@ -97,6 +99,24 @@ class Assembler{
          * Reads from route_file_ and writes to route_map_;
          */
         void PopulateRouteMap();
+
+        /**
+         * Traverse graph and uses Dijkstra's algo to find shortest path between two airports
+         * @return vector of strings corresponding to airport id's in the path
+         */ 
+        std::vector<std::string> FindShortestPath(const std::string& begin, const std::string& end);
+
+        /**
+         * Populates the trip string vector with direction in order.
+         * Includes distances.
+         */
+        void PopulateTrip(std::deque<int>& path, std::vector<std::string>& trip);
+
+        /**
+         * Finds all airlines (edges) between two airports(nodes)
+         */ 
+        std::vector<edge> FindEdges(int first_id, int second_id);
+
 };
 
 struct node{
