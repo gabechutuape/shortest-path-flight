@@ -28,7 +28,7 @@ std::string GetCurrentWorkingDir(){
 }
 
 // Directory for holding test CSV files
-// /home/gfc2/rchaud9-gfc2-dimitar3/testdata/
+// /home/gfc2/rchaud9-gfc2-dimitar3/tests/
 
 // If the final element of the line does not have a comma following it, it will not be parsed.
 // In our data files for our project, typically, the last element of the line is not used.
@@ -42,7 +42,7 @@ TEST_CASE("ParseLine parses lines with basic values separated by commas", "[weig
     }
 
     std::ifstream inputfile;
-    inputfile.open("/home/gfc2/rchaud9-gfc2-dimitar3/testdata/csv1.dat");
+    inputfile.open("/home/gfc2/rchaud9-gfc2-dimitar3/tests/csv1.dat");
 
     REQUIRE( inputfile.is_open() );
 
@@ -64,7 +64,7 @@ TEST_CASE("ParseLine parses lines with strings containing commas", "[weight=1"){
     LineElements.push_back("3,4");
 
     std::ifstream inputfile;
-    inputfile.open("/home/gfc2/rchaud9-gfc2-dimitar3/testdata/csv2.dat");
+    inputfile.open("/home/gfc2/rchaud9-gfc2-dimitar3/tests/csv2.dat");
 
     REQUIRE( inputfile.is_open() );
 
@@ -95,7 +95,7 @@ TEST_CASE("ParseLine parses sample airport data", "[weight=1]"){
     LineElements.push_back("airport");
 
     std::ifstream inputfile;
-    inputfile.open("/home/gfc2/rchaud9-gfc2-dimitar3/testdata/csv3.dat");
+    inputfile.open("/home/gfc2/rchaud9-gfc2-dimitar3/tests/csv3.dat");
 
     REQUIRE( inputfile.is_open() );
 
@@ -140,7 +140,7 @@ TEST_CASE("PopulateIdToName properly generates a map that follows the correct fo
     truemap[3] = "Mount Hagen Kagamuga Airport";
     truemap[4] = "Nadzab Airport";
     std::ifstream inputfile;
-    inputfile.open("/home/gfc2/rchaud9-gfc2-dimitar3/testdata/csv4.dat");
+    inputfile.open("/home/gfc2/rchaud9-gfc2-dimitar3/tests/csv4.dat");
     std::unordered_map<int, std::string> algmap;
     std::string line;
 
