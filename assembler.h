@@ -72,6 +72,23 @@ class Assembler{
          */ 
         Assembler& operator=(const Assembler& other);
 
+        /**
+         * Traverse graph and uses Dijkstra's algo to find shortest path between two airports
+         * @return vector of strings corresponding to airport id's in the path
+         */ 
+        std::vector<std::string> FindShortestPath(const std::string& begin, const std::string& end);
+
+        /**
+         * Finds all airlines (edges) between two airports(nodes)
+         */ 
+        std::vector<edge> FindEdges(int first_id, int second_id);
+
+        /**
+         * Finds the shortest path between 3 points
+         * Uses FindShortestPath twice and concatenates the resulting vector
+         */ 
+        std::vector<std::string> FindLandMarkPath(const std::string& begin, const std::string& mid, const std::string& end);
+
     private:
         void Copy(const Assembler& other);
         void Delete();
@@ -124,27 +141,10 @@ class Assembler{
         void PopulateRouteMap();
 
         /**
-         * Traverse graph and uses Dijkstra's algo to find shortest path between two airports
-         * @return vector of strings corresponding to airport id's in the path
-         */ 
-        std::vector<std::string> FindShortestPath(const std::string& begin, const std::string& end);
-
-        /**
          * Populates the trip string vector with direction in order.
          * Includes distances.
          */
         void PopulateTrip(std::deque<int>& path, std::vector<std::string>& trip);
-
-        /**
-         * Finds all airlines (edges) between two airports(nodes)
-         */ 
-        std::vector<edge> FindEdges(int first_id, int second_id);
-
-        /**
-         * Finds the shortest path between 3 points
-         * Uses FindShortestPath twice and concatenates the resulting vector
-         */ 
-        std::vector<std::string> FindLandMarkPath(const std::string& begin, const std::string& mid, const std::string& end);
 
 };
 
