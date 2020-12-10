@@ -27,9 +27,21 @@ Created a function that finds edges between nodes. Implemented Dijkstra's algori
 using route_map_ as the adjacency list for the graph. This function returns a vector of strings containing info about which route is taken and how much distance between them. I created a helper function that populates this vector of strings. Using the shortest path algo, I implemented a landmark path function. Then I added to the delete function and created the copy function.  
 
 
-## Progress 12/9 (rchaud9)
--Made a makefile
--Made a bunch of test cases
--Tested some compiling
--Did a little bit of debugging whenever an error popped up in compilation
--Had to change some stuff from CS225 makefile template
+### Progress 12/9 (rchaud9)
+-Made a makefile  
+-Made a bunch of test cases  
+-Tested some compiling  
+-Did a little bit of debugging whenever an error popped up in compilation  
+-Had to change some stuff from CS225 makefile template  
+
+### Progress 12/9 and 12/10 (gfc2)
+Created the testfile, updated makefile.  
+In order for our testfile to test the helper functions of the main code working properly, I found it easiest to
+copy the private helper functions over to a new file, helper.cpp and helper.h. This is how tests work. It relies upon
+consistency between assembler.cpp/assembler.h and helper.cpp/helper.h.  
+Implemented 3 different tests for parsing CSV lines (basic values, values containing commas, sample airport data).  
+Implemented 2 tests for using the Haversine formula for calculating distance (two points, and the same point).
+I needed to figure out how to compare two doubles. I accomplished this using an error tolerance value.  
+Implemented a test for checking if PopulateIdToMap properly took the first two values from a CSV line and put
+them into an unordered_map.  
+Currently, we have 9 assertions and 6 test cases. The next tests I would like to have are for shortest distance, and whether or not it actually works.
