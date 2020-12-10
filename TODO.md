@@ -14,7 +14,7 @@
   - This applies to all the algorithms.
 
 - [x] Dijkstra's Algorithm Implementation
-  - [ x Figure out how to apply Dijkstra's Algorithm using data from our CSVs to project specification
+  - [x] Figure out how to apply Dijkstra's Algorithm using data from our CSVs to project specification
 
 - [x] Landmark Path Algorithm Implementation
   - [x] Figure out how to apply Landmark Path Algorithm using data from our CSVs to project specification
