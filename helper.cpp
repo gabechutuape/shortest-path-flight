@@ -11,42 +11,45 @@
 using namespace std;
 
 vector<string> ParseLine(const string &line){
-    char current;
-    bool isQuote = false;
-    string builtStr = "";
-    vector<string> outputStrings;
+    char current_character;
+    string current_string;
+    bool quotation_flag = false;
+    vector<string> line_elements;
 
-    // Cycle through all characters
-    for(size_t i = 0; i < line.size(); ++i) {
-        current = line[i];
+    // Loop through all characters of line
+    for(size_t i = 0; i < line.size(); ++i){
+        current_character = line[i]; 
 
-        // Pushes string into vector when comma found
-        if(!isQuote) {
-            if(current == ',') {
-                outputStrings.push_back(builtStr);
-                builtStr = string();
-            }
-            else if(current == '"')
-                isQuote = true;
-            else
-                builtStr += current;
-        }
-
-        // Checks for matching quotation marks and removes from output
-        else {
-            if(current == '"' && i+1 < line.size()) {
-                if(line[i+1] == '"') {
-                    builtStr += '"';
+        // If the previous character is a quotation mark,
+        if(quotation_flag){
+            if( current_character == '"' && i+1 < line.size() ){
+                if( line[i+1] == '"' ){
+                    current_string += '"';
                     ++i;
                 }
-                else
-                    isQuote = false;
+                else {
+                    quotation_flag = false;
+                }
             }
-            else
-                builtStr += current;
+            else {
+                current_string += current_character;
+            }
+        }
+        // If the previous character is not a quotation mark:
+        else{
+            if( current_character == '"' ){
+                quotation_flag = true;
+            }
+            else if( current_character == ',' ){
+                line_elements.push_back(current_string);
+                current_string.clear();
+            }
+            else {
+                current_string += current_character;
+            }
         }
     }
-    return outputStrings;
+    return line_elements;
 }
 
 double GetDistance(double lat1, double long1, double lat2, double long2){
