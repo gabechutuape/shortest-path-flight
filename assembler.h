@@ -25,6 +25,29 @@ P2: ACTUAL STUFF
 -Algorithm stuff. Will theorize later. Right now lets just get first two parts done
 -------------------------------------------------------------------------------------
 */
+struct node{
+    int id;
+    std::string name;
+    double latitude;
+    double longitude;
+    std::string airport_code;
+};
+
+struct edge{
+    int start_id; //source - unique openflights identifier
+    int end_id; //destination - unique openflights identifier
+    double distance;
+    std::string airport_code;
+    int airline_id;
+    std::string airline_name;
+
+    friend bool operator<(const edge& a, const edge& b){
+        return a.distance < b.distance;
+    }
+    friend bool operator>(const edge& a, const edge& b){
+        return a.distance > b.distance;
+    }
+};
 
 class Assembler{
     public:
@@ -125,21 +148,6 @@ class Assembler{
 
 };
 
-struct node{
-    int id;
-    std::string name;
-    double latitude;
-    double longitude;
-    std::string airport_code;
-};
 
-struct edge{
-    int start_id; //source - unique openflights identifier
-    int end_id; //destination - unique openflights identifier
-    double distance;
-    std::string airport_code;
-    int airline_id;
-    std::string airline_name;
-};
 
 #endif //ASSEMBLER_H

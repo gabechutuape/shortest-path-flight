@@ -206,6 +206,11 @@ vector<string> Assembler::FindShortestPath(const std::string& begin, const std::
     {
         throw "End not found";
     }
+    if (begin == end)
+    {
+        throw "Beginning and End are the same";
+    }
+    
     int start_id = airport_code_to_ID_[begin];
     int end_id = airport_code_to_ID_[end];
     
@@ -219,7 +224,7 @@ vector<string> Assembler::FindShortestPath(const std::string& begin, const std::
     //initial case
     for (size_t i = 0; i < connecting_edges.size(); i++)
     {
-        prior_queue.push(pair<double, edge>(-1 * connecting_edges[i].distance, connecting_edges[i]));
+        prior_queue.push(pair<double, edge>(-1.0 * connecting_edges[i].distance, connecting_edges[i]));
     }
     
     int next_id = -1;
