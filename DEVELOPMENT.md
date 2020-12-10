@@ -48,3 +48,6 @@ Currently, we have 9 assertions and 6 test cases. The next tests I would like to
 ### Progress 12/10 (rchaud9)
 Worked some more on the testfile. We have good tests, but we still need to test for the actual program, as in testing for 
 shortest distance. 
+
+### Progress 12/11 (dimitar3)
+Bug Fixes: Added a check in shortest path function, changed to using relative file paths in test cases, made some functions public as necessary, moved structs to top of file to fix errors.
