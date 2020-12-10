@@ -57,7 +57,7 @@ TEST_CASE("ParseLine parses lines with basic values separated by commas", "[weig
 }
 
 
-TEST_CASE("ParseLine parses lines with strings containing commas", "[weight=1"){
+TEST_CASE("ParseLine parses lines with strings containing commas", "[weight=1]"){
     std::vector<std::string> LineElements;
     LineElements.push_back("1");
     LineElements.push_back("2");
@@ -155,3 +155,11 @@ TEST_CASE("PopulateIdToName properly generates a map that follows the correct fo
     inputfile.close();
     REQUIRE( truemap == algmap );
 }
+
+
+//
+
+//TEST_CASE("Basic case for a shortest path test"){
+
+//
+

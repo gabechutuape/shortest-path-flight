@@ -28,11 +28,10 @@ using route_map_ as the adjacency list for the graph. This function returns a ve
 
 
 ### Progress 12/9 (rchaud9)
--Made a makefile  
--Made a bunch of test cases  
--Tested some compiling  
--Did a little bit of debugging whenever an error popped up in compilation  
--Had to change some stuff from CS225 makefile template  
+Made and implemented a Makefile.
+This makefile basically used the original CS225 template (with some modifications) and includes the compilation for the test cases as well.
+In testing it, a few issues with bugs came up, but it was nothing too severe that I had to change. There were some syntax issues, and a few functions that had one or two small things
+such as a variable type that needed fixing. Also started looking into the test file but didn't get to actually making it.
 
 ### Progress 12/9 and 12/10 (gfc2)
 Created the testfile, updated makefile.  
@@ -45,3 +44,7 @@ I needed to figure out how to compare two doubles. I accomplished this using an 
 Implemented a test for checking if PopulateIdToMap properly took the first two values from a CSV line and put
 them into an unordered_map.  
 Currently, we have 9 assertions and 6 test cases. The next tests I would like to have are for shortest distance, and whether or not it actually works.
+
+### Progress 12/10 (rchaud9)
+Worked some more on the testfile. We have good tests, but we still need to test for the actual program, as in testing for 
+shortest distance. 
