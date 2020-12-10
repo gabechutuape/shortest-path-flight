@@ -7,8 +7,8 @@
   - This follows the same idea as the previous tickbox
 
 ### Logic Operations
-- [ ] Breadth First Search Implementation
-  - [ ] Figure out how to apply breadth first search using data from our CSVs to project specification
+- [x] Breadth First Search Implementation
+  - [x] Figure out how to apply breadth first search using data from our CSVs to project specification
   - How can we apply the ideas of breadth first search to finding a route between airports?
   - The idea to remember is that we're also trying to find the "shortest path" between them.
   - This applies to all the algorithms.
