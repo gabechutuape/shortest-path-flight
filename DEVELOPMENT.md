@@ -51,3 +51,10 @@ shortest distance.
 
 ### Progress 12/11 (dimitar3)
 Bug Fixes: Added a check in shortest path function, changed to using relative file paths in test cases, made some functions public as necessary, moved structs to top of file to fix errors.
+
+### Progress 12/11 (gfc2)
+Bug Fix: I found out that we were parsing latitudes and longitudes when populating our map containing airport locations as INTEGERS and not DOUBLES. This has been rectified.  
+Made a test case for PopulateAirportMapAndCodeToID. The test has two test nodes, with manually assigned information of airports, builds a map containing those nodes and 
+an unordered map containing each airport ID and code. It then compares this information to the logic used in our PopulateAirportMapAndCodeToID function. Again, in this case
+I copied the code of the function and not the actual function itself because I couldn't figure out how to pass an input file as an argument, since that isn't how the
+function is used in our program anyways. I figure as long as the code is the same, the test is still valid.
