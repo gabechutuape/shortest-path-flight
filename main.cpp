@@ -9,18 +9,28 @@ using namespace std;
 void FindStartAndEnd(string& start_code, string& end_code);
 bool IsValidCode(const string& code);
 void PrintTrip(const vector<string>& trip);
-
+void FindStartMidAndEnd(string& start_code, string& mid_code, string& end_code);
+bool IsLandMark();
 
 int main()
 {
     Assembler assembler("airports.dat", "airlines.dat", "routes.dat");
     string start_code;
+    string mid_code;
     string end_code;
+
     try
     {
-
-        FindStartAndEnd(start_code, end_code);
-        PrintTrip(assembler.FindShortestPath(start_code, end_code));
+        if (IsLandMark())
+        {
+            FindStartMidAndEnd(start_code, mid_code, end_code);
+            PrintTrip(assembler.FindLandMarkPath(start_code, mid_code, end_code));
+        }
+        else
+        {
+            FindStartAndEnd(start_code, end_code);
+            PrintTrip(assembler.FindShortestPath(start_code, end_code));
+        }
     }
     catch(ERRORS e)
     {
@@ -42,9 +52,26 @@ int main()
             cout << "Start airport and destination airport are the same" << endl;
         }
     }
+}
+
+bool IsLandMark(){
+    cout<<"Do you wish to make a stop somewhere? (Y/N) ";
+    string input;
+    cin >> input;
     
+    while (input != "Y" && input != "y" && input != "N" &&input != "n")
+    {
+        cout << "Enter either Y or N :";
+        cin >> input;
+    }
+    if (input == "Y" || input == "y")
+    {
+        return true;
+    }
+    return false;
 
 }
+
 void FindStartAndEnd(string& start_code, string& end_code){
     cout << "Enter IATA code of starting airport: ";
     cin >> start_code;
@@ -54,6 +81,32 @@ void FindStartAndEnd(string& start_code, string& end_code){
         cin >> start_code;
     }
 
+    cout << "Enter IATA code of destination airport: ";
+    cin >> end_code;
+    while (!IsValidCode(end_code))
+    {
+        cout << "Incorrect format. Try Again: ";
+        cin >> end_code;
+    }
+}
+
+void FindStartMidAndEnd(string& start_code, string& mid_code, string& end_code){
+    cout << "Enter IATA code of starting airport: ";
+    cin >> start_code;
+    while (!IsValidCode(start_code))
+    {
+        cout << "Incorrect format. Try Again: ";
+        cin >> start_code;
+    }
+
+    cout<< "Enter IATA code of intermediate destination: ";
+    cin >> mid_code;
+    while (!IsValidCode(mid_code))
+    {
+        cout << "Incorrect format. Try Again: ";
+        cin >> mid_code;
+    }
+    
     cout << "Enter IATA code of destination airport: ";
     cin >> end_code;
     while (!IsValidCode(end_code))
@@ -83,7 +136,7 @@ void PrintTrip(const vector<string>& trip){
     cout << endl << "TRIP"<< endl;
     for (size_t i = 0; i < trip.size(); i++)
     {
-        cout<<trip[i] << endl;
+        cout<<trip[i] << endl << endl;
     }
     cout << endl;
 }
