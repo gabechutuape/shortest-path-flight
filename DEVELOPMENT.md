@@ -63,3 +63,9 @@ function is used in our program anyways. I figure as long as the code is the sam
 Made some new test cases. Wanted to test out the PopulateRouteMap. Made a simple test case that reads and makes a simple edge that takes and reads the input 
 from a file and uses the same logic that the normal code would. Took a bit of bugfixing. Still not sure why it only works if 2+ lines are present. Similar to the above approach,
 I used a copy of the code of the function and not the real function itself. It seemed to work for our purpose.
+
+### Progress 12/11 (dimitar3)
+Implemented the output of the information to the user, as well as input validation.
+Created all the necessary functions in main.cpp to get the project to run.
+Fixed some bugs in assembler.cpp.
+Added error enum in assembler to help with error outputs in command line.

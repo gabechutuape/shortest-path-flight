@@ -1,5 +1,6 @@
 #include <iostream>
 #include "assembler.h"
+#include <algorithm>
 
 using namespace std;
 
@@ -11,6 +12,7 @@ bool IsValidCode(const string& code);
 void PrintTrip(const vector<string>& trip);
 void FindStartMidAndEnd(string& start_code, string& mid_code, string& end_code);
 bool IsLandMark();
+void ToUpper(string& text);
 
 int main()
 {
@@ -24,11 +26,20 @@ int main()
         if (IsLandMark())
         {
             FindStartMidAndEnd(start_code, mid_code, end_code);
+
+            ToUpper(start_code);
+            ToUpper(mid_code);
+            ToUpper(end_code);
+
             PrintTrip(assembler.FindLandMarkPath(start_code, mid_code, end_code));
         }
         else
         {
             FindStartAndEnd(start_code, end_code);
+
+            ToUpper(start_code);
+            ToUpper(end_code);
+
             PrintTrip(assembler.FindShortestPath(start_code, end_code));
         }
     }
@@ -139,4 +150,8 @@ void PrintTrip(const vector<string>& trip){
         cout<<trip[i] << endl << endl;
     }
     cout << endl;
+}
+
+void ToUpper(string& text){
+    transform(text.begin(), text.end(), text.begin(), ::toupper);
 }

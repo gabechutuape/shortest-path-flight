@@ -32,5 +32,5 @@
 - [ ] LandmarkPath
 
 ### Project Output
-- [ ] Output user requested information in console
-  - [ ] Obtain user requested information in usable format
+- [x] Output user requested information in console
+  - [x] Obtain user requested information in usable format
