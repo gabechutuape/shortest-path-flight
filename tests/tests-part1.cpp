@@ -312,10 +312,16 @@ TEST_CASE("PopulateAirportMapAndCodeToID properly fills a node, airport map, and
 
 }
 
+/**
+ * This is a test case to match the code in our program in PopulateRouteMap.
+ * There aren't any helper functions within this function that populates an unordered map that we haven't
+ * tested already, so we're just testing to see if our struct called edge properly contains information.
+ * In theory, this implementation matches how the process populates the entire route map, which is several thousands
+ * more data points than in this test case. So if this works, that should work.
+ */
 
-TEST_CASE("PopulateRouteMap Test"){
+TEST_CASE("Edge works properly as a struct to hold data required for project specification"){
     std::string line;
-    //std::unordered_map<int, std::vector<edge>> route_map_;
     
     //code to test
     std::ifstream inputfile;
@@ -328,29 +334,70 @@ TEST_CASE("PopulateRouteMap Test"){
         DESTINATION_ID = 5
     };
 
-    edge testedge1;
-    testedge1.start_id = 2965;
-    testedge1.end_id = 2990;
-
-    edge testedge2;
-    testedge2.start_id = 2966;
-    testedge2.end_id = 2990;
+    edge trueedge;
+    trueedge.start_id = 2965;
+    trueedge.end_id = 2990;
     
-    edge real_edge;
+    edge realedge;
 
     while(getline(inputfile, line)){
         std::vector<std::string> parsed_line = ParseLine(line);
         
-        real_edge.start_id = stoi(parsed_line[SOURCE_ID]);
-        real_edge.end_id = stoi(parsed_line[DESTINATION_ID]);
+        realedge.start_id = stoi(parsed_line[SOURCE_ID]);
+        realedge.end_id = stoi(parsed_line[DESTINATION_ID]);
     }
 
 
     inputfile.close();
-    REQUIRE(testedge2.start_id == real_edge.start_id);
-    REQUIRE(testedge2.end_id == real_edge.end_id);
+
+    REQUIRE(trueedge.start_id == realedge.start_id);
+    REQUIRE(trueedge.end_id == realedge.end_id);
     
 }
 
-  
+/**
+ * Test case for public function FindShortestPath.
+ * This test case utilizes our copied class, TestAssembler, which is literally just Assembler from assembler.cpp/assembler.h.
+ * The reason it is copied over into a new class is for ease in testing. The goal of this test is to produce a double-ended queue of
+ * integers that represent the airports that you visit in order to get from airport A to airport B. In the project code, FindShortestPath
+ * returns a vector of strings which is an itinerary of flights to take in readable format. In this test code, we simply want to prove
+ * that the algorithm returns the airports that you have to visit, in the form of their IDs. The case we use is from ORD (O'Hare) to MNL (Manila).
+ * To come up with our dataset, we used four airports: ORD (O'Hare), NRT (Narita International), PVG (Shanghai), and MNL (Manila). We know that
+ * it takes less time to go from ORD -> NRT -> MNL, so if we put PVG into the dataset, the algorithm should detect that the shortest path
+ * is from ORD -> NRT -> MNL. truepath holds the airport ID codes of those airports, and FindShortestPath should return the same three airport ID codes.
+ */
 
+TEST_CASE("FindShortestPath properly finds the shortest path"){
+
+    // Manual assignment
+    std::deque<int> truepath = {3830, 2279, 2397};
+
+    // Code to be tested
+    TestAssembler testasm("./tests/airport.dat", "./tests/airline.dat", "./tests/route.dat");
+    std::deque<int> algpath = testasm.FindShortestPath("ORD", "MNL");
+    REQUIRE( truepath == algpath );
+}
+
+/**
+ * Test case for public function FindLandMarkPath.
+ * This test case uses FindShortestPath twice to find the shortest path from A to B given an intermediate destination.
+ * We know that to get from ORD (O'Hare) to MNL (Manila), you can visit either NRT (Narita) or PVG (Shanghai). PVG is longer
+ * in terms of distance, so FindShortestPath will always choose to go to NRT. Therefore, if we choose PVG as the intermediate
+ * destination, then FindLandMarkPath will produce the path ORD -> PVG -> MNL. In our algorithm for FindLandMarkPath,
+ * the airport code of the intermediate destination is in the double ended queue twice, because we're simply running
+ * FindShortestPath twice, and it has to have a start, which is in this case, the end of the previous FindShortestPath.
+ * Therefore, truepath holds the airport ID code for ORD, PVG, PVG, MNL. If the test case passes, FindLandMarkPath reproduces
+ * that set of integers.
+ */
+
+TEST_CASE("FindLandmarkPath properly finds the shortest path based on intermediate destination"){
+    
+    // Manual assignment
+    std::deque<int> truepath = {3830, 3406, 3406, 2397};
+
+    // Code to be tested
+    TestAssembler testasm("./tests/airport.dat", "./tests/airline.dat", "./tests/route.dat");
+    std::deque<int> algpath = testasm.FindLandMarkPath("ORD", "PVG", "MNL");
+    REQUIRE( truepath == algpath );
+
+}

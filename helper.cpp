@@ -72,20 +72,216 @@ double GetDistance(double lat1, double long1, double lat2, double long2){
     return distance;
 }
 
-/*
-vector<string> FindShortestPath(const std::string& begin, const std::string& end){
+TestAssembler::TestAssembler(const std::string& airport_file, const std::string& airline_file, const std::string& route_file){
+    airport_file_ = airport_file;
+    airline_file_ = airline_file;
+    route_file_ = route_file;
+    PopulateIdToName();
+    PopulateAirportMapAndCodeToID();
+    PopulateRouteMap();
+}
+
+TestAssembler::~TestAssembler(){
+    Delete();
+}
+
+TestAssembler::TestAssembler(const TestAssembler& other){
+    Copy(other);
+}
+
+vector<string> TestAssembler::ParseLine(const string &line){
+    char current_character;
+    string current_string;
+    bool quotation_flag = false;
+    vector<string> line_elements;
+
+    // Loop through all characters of line
+    for(size_t i = 0; i < line.size(); ++i){
+        current_character = line[i]; 
+
+        // If the previous character is a quotation mark,
+        if(quotation_flag){
+            if( current_character == '"' && i+1 < line.size() ){
+                if( line[i+1] == '"' ){
+                    current_string += '"';
+                    ++i;
+                }
+                else {
+                    quotation_flag = false;
+                }
+            }
+            else {
+                current_string += current_character;
+            }
+        }
+        // If the previous character is not a quotation mark:
+        else{
+            if( current_character == '"' ){
+                quotation_flag = true;
+            }
+            else if( current_character == ',' ){
+                line_elements.push_back(current_string);
+                current_string.clear();
+            }
+            else {
+                current_string += current_character;
+            }
+        }
+    }
+    return line_elements;
+}
+
+TestAssembler& TestAssembler::operator=(const TestAssembler& other){
+    if (this != &other)
+    {
+        Delete();
+        Copy(other);
+    }
+    return *this;
+}
+
+double TestAssembler::GetDistance(double lat1, double long1, double lat2, double long2){
+    double latitude_1 = lat1 * M_PI / 180.;
+    double longitude_1 = long1 * M_PI / 180.;
+    double latitude_2 = lat2 * M_PI / 180.;
+    double longitude_2 = long2 * M_PI / 180.;
+
+    double difLat = abs(latitude_1 - latitude_2);
+    double difLong = abs(longitude_1 - longitude_2);
+
+    double a = pow(sin(difLat / 2), 2) + (cos(latitude_1) * cos(latitude_2) * pow(sin(difLong / 2), 2)); //square of half the chord length 
+
+    double c = 2 * atan2(sqrt(a), sqrt(1-a)); //angular distance in radians
+
+    const double kEarthRadius = 3958.8; //in miles
+
+    double distance = c * kEarthRadius;
+
+    return distance;
+}
+
+void TestAssembler::PopulateIdToName(){
+    ifstream inputFile(airline_file_);
+    string line;
+
+    while(getline(inputFile, line)){
+
+        vector<string> parsed_line = ParseLine(line); //Line of CSV turns into vector of parsed strings
+
+        airline_ID_to_name_.insert(pair<int, string>(atoi(parsed_line[0].c_str()), parsed_line[1])); //1st element should be id, 2nd the name
+    }
+
+    inputFile.close();
+}
+
+void TestAssembler::PopulateAirportMapAndCodeToID(){
+    ifstream inputFile(airport_file_);
+    string line;
+
+    enum airport_file{ //corresponds to the CSV file entries
+        ID = 0,
+        NAME = 1,
+        CODE = 4,
+        LATITUDE = 6,
+        LONGITUDE = 7
+    };
+
+    while(getline(inputFile, line)){
+        vector<string> parsed_line = ParseLine(line);
+
+        node airport_node;
+        
+        airport_node.id = stoi(parsed_line[ID]);
+        airport_node.name = parsed_line[NAME];
+        airport_node.latitude = stod(parsed_line[LATITUDE]);
+        airport_node.longitude = stod(parsed_line[LONGITUDE]);
+        airport_node.airport_code = parsed_line[CODE];
+
+        airport_map_.insert(pair<int, node>(airport_node.id, airport_node));
+        airport_code_to_ID_.insert(pair<string, int>(airport_node.airport_code, airport_node.id));
+    }
+
+    inputFile.close();
+}
+
+void TestAssembler::PopulateRouteMap(){
+    ifstream inputFile(route_file_);
+    string line;
+
+    enum route_file{ //corresponds to the CSV file entries
+        AIRLINE_ID = 1,
+        SOURCE_ID = 3,
+        DESTINATION_IATA = 4,
+        DESTINATION_ID = 5
+    };
+
+    while(getline(inputFile, line)){
+        vector<string> parsed_line = ParseLine(line);
+
+        int source_id = atoi(parsed_line[SOURCE_ID].c_str());
+        int dest_id = atoi(parsed_line[DESTINATION_ID].c_str());
+
+        //If source and destination exist: add to route_map_
+        if (airport_map_.find(source_id) != airport_map_.end() && 
+        airport_map_.find(dest_id) != airport_map_.end())
+        {
+            edge route;
+
+            //Creates blank entry if a previous one didn't exist
+            if (route_map_.find(source_id) == route_map_.end())
+            {
+                route_map_.insert(pair<int, vector<edge>>(source_id, vector<edge>()));
+            }
+
+            route.start_id = source_id;
+            route.end_id = dest_id;
+            route.airport_code = parsed_line[DESTINATION_IATA];
+            route.airline_id = atoi(parsed_line[AIRLINE_ID].c_str());
+
+            //Check if airport exists
+            if (airline_ID_to_name_.find(route.airline_id) != airline_ID_to_name_.end())
+            {
+                route.airline_name = airline_ID_to_name_[route.airline_id];
+            }
+            else{
+                route.airline_name = "Unknown Airline";
+            }
+
+            route.distance = GetDistance(airport_map_[source_id].latitude, airport_map_[source_id].longitude,
+             airport_map_[dest_id].latitude, airport_map_[dest_id].longitude);
+
+            route_map_[source_id].push_back(route); //places route in proper edge vector
+        }
+    }
+    inputFile.close();
+}
+
+vector<edge> TestAssembler::FindEdges(int first_id, int second_id){
+    vector<edge> connecting_edges = route_map_[first_id];
+    vector<edge> matching_edges;
+    for (size_t i = 0; i < connecting_edges.size(); i++)
+    {
+        if (connecting_edges[i].end_id == second_id)
+        {
+            matching_edges.push_back(connecting_edges[i]);
+        }
+    }
+    return matching_edges;
+}
+
+deque<int> TestAssembler::FindShortestPath(const std::string& begin, const std::string& end){
     //Existence checks
     if (airport_code_to_ID_.find(begin) == airport_code_to_ID_.end())
     {
-        throw "Beginning not found";
+        throw START_NOT_FOUND;
     }
     if (airport_code_to_ID_.find(end) == airport_code_to_ID_.end())
     {
-        throw "End not found";
+        throw END_NOT_FOUND;
     }
     if (begin == end)
     {
-        throw "Beginning and End are the same";
+        throw START_AND_END_EQUAL;
     }
     
     int start_id = airport_code_to_ID_[begin];
@@ -128,7 +324,7 @@ vector<string> FindShortestPath(const std::string& begin, const std::string& end
     //If no possible route
     if (prior_queue.empty() && next_id != end_id)
     {
-        throw "No possible route";
+        throw NO_ROUTE;
     }
     deque<int> path;
     int parent = end_id;
@@ -139,8 +335,38 @@ vector<string> FindShortestPath(const std::string& begin, const std::string& end
     }
     path.push_front(parent);
 
-    vector<string> trip;
-    PopulateTrip(path, trip);
-    return trip;
+    return path;
 }
-*/
+
+deque<int> TestAssembler::FindLandMarkPath(const std::string& begin, const std::string& mid, const std::string& end){
+    deque<int> first_path = FindShortestPath(begin, mid);
+    deque<int> second_path = FindShortestPath(mid, end);
+    deque<int> total_path;
+
+    //total_path.reserve(first_path.size() + second_path.size());
+    
+    total_path.insert(total_path.end(), first_path.begin(), first_path.end());
+    total_path.insert(total_path.end(), second_path.begin(), second_path.end());
+
+    return total_path;
+}
+
+
+void TestAssembler::Delete(){
+    airport_file_.clear();
+    airline_file_.clear();
+    route_file_.clear();
+    airline_ID_to_name_.clear();
+    airport_map_.clear();
+    route_map_.clear();
+    airport_code_to_ID_.clear();
+}
+void TestAssembler::Copy(const TestAssembler& other) {
+    airport_file_ = other.airport_file_;
+    airline_file_ = other.airline_file_;
+    route_file_ = other.route_file_;
+    airline_ID_to_name_ = other.airline_ID_to_name_;
+    airport_map_ = other.airport_map_;
+    route_map_ = other.route_map_;
+    airport_code_to_ID_ = other.airport_code_to_ID_;
+}
