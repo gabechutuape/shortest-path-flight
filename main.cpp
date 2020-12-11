@@ -60,7 +60,7 @@ int main()
         }
         else if (e == START_AND_END_EQUAL)
         {
-            cout << "Start airport and destination airport are the same" << endl;
+            cout << "Starting and stopping points cannot be the same" << endl;
         }
     }
 }
