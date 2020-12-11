@@ -121,8 +121,8 @@ void Assembler::PopulateAirportMapAndCodeToID(){
         
         airport_node.id = stoi(parsed_line[ID]);
         airport_node.name = parsed_line[NAME];
-        airport_node.latitude = stoi(parsed_line[LATITUDE]);
-        airport_node.longitude = stoi(parsed_line[LONGITUDE]);
+        airport_node.latitude = stod(parsed_line[LATITUDE]);
+        airport_node.longitude = stod(parsed_line[LONGITUDE]);
         airport_node.airport_code = parsed_line[CODE];
 
         airport_map_.insert(pair<int, node>(airport_node.id, airport_node));
@@ -131,6 +131,7 @@ void Assembler::PopulateAirportMapAndCodeToID(){
 
     inputFile.close();
 }
+
 void Assembler::PopulateRouteMap(){
     ifstream inputFile(airport_file_);
     string line;
