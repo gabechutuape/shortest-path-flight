@@ -3,7 +3,9 @@
 
 using namespace std;
 
-
+/**
+ * Prototypes
+ */ 
 void FindStartAndEnd(string& start_code, string& end_code);
 bool IsValidCode(const string& code);
 void PrintTrip(const vector<string>& trip);
@@ -14,15 +16,31 @@ int main()
     Assembler assembler("airports.dat", "airlines.dat", "routes.dat");
     string start_code;
     string end_code;
-
     try
     {
+
         FindStartAndEnd(start_code, end_code);
         PrintTrip(assembler.FindShortestPath(start_code, end_code));
     }
-    catch(const std::exception& e)
+    catch(ERRORS e)
     {
-        std::cerr << e.what() << '\n';
+        cout << "ERROR: ";
+        if (e == NO_ROUTE)
+        {
+            cout << "No route found" << endl;
+        }
+        else if (e == START_NOT_FOUND)
+        {
+            cout << "Starting airport not found" << endl;
+        }
+        else if (e == END_NOT_FOUND)
+        {
+            cout << "Ending airport not found" << endl;
+        }
+        else if (e == START_AND_END_EQUAL)
+        {
+            cout << "Start airport and destination airport are the same" << endl;
+        }
     }
     
 

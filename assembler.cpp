@@ -6,8 +6,9 @@ Assembler::Assembler(const std::string& airport_file, const std::string& airline
     airport_file_ = airport_file;
     airline_file_ = airline_file;
     route_file_ = route_file;
-    //Add functions for constructing graph
     PopulateIdToName();
+    PopulateAirportMapAndCodeToID();
+    PopulateRouteMap();
 }
 
 Assembler::~Assembler(){
@@ -96,7 +97,7 @@ void Assembler::PopulateIdToName(){
 
         vector<string> parsed_line = ParseLine(line); //Line of CSV turns into vector of parsed strings
 
-        airline_ID_to_name_.insert(pair<int, string>(stoi(parsed_line[0]), parsed_line[1])); //1st element should be id, 2nd the name
+        airline_ID_to_name_.insert(pair<int, string>(atoi(parsed_line[0].c_str()), parsed_line[1])); //1st element should be id, 2nd the name
     }
 
     inputFile.close();
@@ -133,7 +134,7 @@ void Assembler::PopulateAirportMapAndCodeToID(){
 }
 
 void Assembler::PopulateRouteMap(){
-    ifstream inputFile(airport_file_);
+    ifstream inputFile(route_file_);
     string line;
 
     enum route_file{ //corresponds to the CSV file entries
@@ -146,8 +147,8 @@ void Assembler::PopulateRouteMap(){
     while(getline(inputFile, line)){
         vector<string> parsed_line = ParseLine(line);
 
-        int source_id = stoi(parsed_line[SOURCE_ID]);
-        int dest_id = stoi(parsed_line[DESTINATION_ID]);
+        int source_id = atoi(parsed_line[SOURCE_ID].c_str());
+        int dest_id = atoi(parsed_line[DESTINATION_ID].c_str());
 
         //If source and destination exist: add to route_map_
         if (airport_map_.find(source_id) != airport_map_.end() && 
@@ -164,7 +165,7 @@ void Assembler::PopulateRouteMap(){
             route.start_id = source_id;
             route.end_id = dest_id;
             route.airport_code = parsed_line[DESTINATION_IATA];
-            route.airline_id = stoi(parsed_line[AIRLINE_ID]);
+            route.airline_id = atoi(parsed_line[AIRLINE_ID].c_str());
 
             //Check if airport exists
             if (airline_ID_to_name_.find(route.airline_id) != airline_ID_to_name_.end())
@@ -201,15 +202,15 @@ vector<string> Assembler::FindShortestPath(const std::string& begin, const std::
     //Existence checks
     if (airport_code_to_ID_.find(begin) == airport_code_to_ID_.end())
     {
-        throw "Beginning not found";
+        throw START_NOT_FOUND;
     }
     if (airport_code_to_ID_.find(end) == airport_code_to_ID_.end())
     {
-        throw "End not found";
+        throw END_NOT_FOUND;
     }
     if (begin == end)
     {
-        throw "Beginning and End are the same";
+        throw START_AND_END_EQUAL;
     }
     
     int start_id = airport_code_to_ID_[begin];
@@ -252,7 +253,7 @@ vector<string> Assembler::FindShortestPath(const std::string& begin, const std::
     //If no possible route
     if (prior_queue.empty() && next_id != end_id)
     {
-        throw "No possible route";
+        throw NO_ROUTE;
     }
     deque<int> path;
     int parent = end_id;

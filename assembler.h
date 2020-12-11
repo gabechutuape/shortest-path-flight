@@ -48,6 +48,12 @@ struct edge{
         return a.distance > b.distance;
     }
 };
+enum ERRORS{
+    NO_ROUTE,
+    START_NOT_FOUND,
+    END_NOT_FOUND,
+    START_AND_END_EQUAL
+};
 
 class Assembler{
     public:
