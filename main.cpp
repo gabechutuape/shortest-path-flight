@@ -7,12 +7,12 @@ using namespace std;
 /**
  * Prototypes
  */ 
-void FindStartAndEnd(string& start_code, string& end_code);
-bool IsValidCode(const string& code);
-void PrintTrip(const vector<string>& trip);
-void FindStartMidAndEnd(string& start_code, string& mid_code, string& end_code);
-bool IsLandMark();
-void ToUpper(string& text);
+void FindStartAndEnd(string& start_code, string& end_code); //Find start and end airport codes and sets entered strings equal to user input
+bool IsValidCode(const string& code); //checks if user inputted code is of valid format
+void PrintTrip(const vector<string>& trip); //Prints the trip in user friendly manner
+void FindStartMidAndEnd(string& start_code, string& mid_code, string& end_code); //Finds start, mid and end airport codes
+bool IsLandMark(); //If user inputs "Y" or "y" for an intermediate destination
+void ToUpper(string& text); //Capitalizes strings entered
 
 int main()
 {
