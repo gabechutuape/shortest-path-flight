@@ -47,7 +47,7 @@ Currently, we have 9 assertions and 6 test cases. The next tests I would like to
 
 ### Progress 12/10 (rchaud9)
 Worked some more on the testfile. We have good tests, but we still need to test for the actual program, as in testing for 
-shortest distance. 
+shortest distance. Shortest distance would need implementation for PopulateAirportMapAndCodeToID so started work on that. Cleaned up the overall code a bit as well, added a few comments. 
 
 ### Progress 12/11 (dimitar3)
 Bug Fixes: Added a check in shortest path function, changed to using relative file paths in test cases, made some functions public as necessary, moved structs to top of file to fix errors.
@@ -58,3 +58,8 @@ Made a test case for PopulateAirportMapAndCodeToID. The test has two test nodes,
 an unordered map containing each airport ID and code. It then compares this information to the logic used in our PopulateAirportMapAndCodeToID function. Again, in this case
 I copied the code of the function and not the actual function itself because I couldn't figure out how to pass an input file as an argument, since that isn't how the
 function is used in our program anyways. I figure as long as the code is the same, the test is still valid.
+
+### Progress 12/11 (rchaud9)
+Made some new test cases. Wanted to test out the PopulateRouteMap. Made a simple test case that reads and makes a simple edge that takes and reads the input 
+from a file and uses the same logic that the normal code would. Took a bit of bugfixing. Still not sure why it only works if 2+ lines are present. Similar to the above approach,
+I used a copy of the code of the function and not the real function itself. It seemed to work for our purpose.

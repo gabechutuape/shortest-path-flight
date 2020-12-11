@@ -313,3 +313,44 @@ TEST_CASE("PopulateAirportMapAndCodeToID properly fills a node, airport map, and
 }
 
 
+TEST_CASE("PopulateRouteMap Test"){
+    std::string line;
+    //std::unordered_map<int, std::vector<edge>> route_map_;
+    
+    //code to test
+    std::ifstream inputfile;
+    inputfile.open("./tests/csv6.dat");
+
+    enum route_file{ //corresponds to the CSV file entries
+        AIRLINE_ID = 1,
+        SOURCE_ID = 3,
+        DESTINATION_IATA = 4,
+        DESTINATION_ID = 5
+    };
+
+    edge testedge1;
+    testedge1.start_id = 2965;
+    testedge1.end_id = 2990;
+
+    edge testedge2;
+    testedge2.start_id = 2966;
+    testedge2.end_id = 2990;
+    
+    edge real_edge;
+
+    while(getline(inputfile, line)){
+        std::vector<std::string> parsed_line = ParseLine(line);
+        
+        real_edge.start_id = stoi(parsed_line[SOURCE_ID]);
+        real_edge.end_id = stoi(parsed_line[DESTINATION_ID]);
+    }
+
+
+    inputfile.close();
+    REQUIRE(testedge2.start_id == real_edge.start_id);
+    REQUIRE(testedge2.end_id == real_edge.end_id);
+    
+}
+
+  
+
