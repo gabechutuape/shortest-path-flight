@@ -1,5 +1,8 @@
 # Development Log
 
+### Progress Fall Break
+None.
+
 ### Progress 12/4 (gfc2)
 Today, I added the required data files for the project to work, those being the 
 routes, airlines, and airports from OpenFlights. I also added the logic for parsing lines of data from
@@ -69,3 +72,19 @@ Implemented the output of the information to the user, as well as input validati
 Created all the necessary functions in main.cpp to get the project to run.
 Fixed some bugs in assembler.cpp.
 Added error enum in assembler to help with error outputs in command line.
+
+### Progress 12/11 (gfc2)
+Implemented the test cases for FindShortestPath and FindLandMarkPath.  
+In order to accomplish testing these, I wanted to prove that they could produce a double-ended queue of airport IDs that represent the path that you take from point A to point B.  
+However, our project code would return text for the user to see in the form of a trip itinerary. So, I copied over the entirety of assembler.cpp/assembler.h into helper.cpp/helper.h and
+renamed the Assembler class and all references to it to TestAssembler. Next, I had to produce 3 datasets for the TestAssembler constructor to use: an airports data file, an airlines
+data file, and a routes data file. In order to do this, I needed to produce a graph that I would test things on. I settled on 4 nodes: ORD (O'Hare Int'l Airport), NRT (Narita Int'l Airport),
+PVG (Shanghai Pudong Int'l Airport), and MNL (Manila Ninoy Aquino Airport). I chose these four because it's faster to get from O'Hare to Manila by stopping in Narita, versus stopping in Shanghai.
+Therefore, I needed to grab the airport data from airports.dat from OpenFlights for these four airports and put them into my dataset. Then, I took the airlines that serviced these locations
+(US, Japan, China, Philippines), and put them into my airline dataset. Lastly, knowing what airlines could take you from US->Japan or US->China and then Japan->Philippines or China->Philippines,
+I was able to find all the routes that would be detected within routes.dat as valid, and copied those into my dataset. This was a lot of work on my end, and there may have been an easier way to
+verify that we could successfully implement Dijkstra's algorithm, such as cooking down our code from assembler.cpp to a very basic version and making a very basic dataset. In terms of reusability
+with testing other airports, it's very difficult to try new tests. You would need to do what I did entirely.
+In terms of testing FindLandMarkPath, I simply wanted to see if it properly determined a path through ORD -> PVG -> MNL if it was given PVG as the required intermediate destination, as opposed to NRT.
+FindLandMarkPath simply runs FindShortestPath twice, and I wanted the test case to produce a double-ended queue of those airport IDs produced by FindShortestPath.  
+In the end, the code is slightly changed when copying from assembler.cpp/assembler.h to helper.cpp/helper.h, but in my opinion, it performs a successful test, and that's all I wanted.

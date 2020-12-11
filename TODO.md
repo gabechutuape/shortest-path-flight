@@ -28,8 +28,8 @@
 - [x] ParseLine
 - [x] GetDistance
 - [x] PopulateIdToMap
-- [ ] ShortestPath
-- [ ] LandmarkPath
+- [x] ShortestPath
+- [x] LandmarkPath
 
 ### Project Output
 - [x] Output user requested information in console
