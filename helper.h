@@ -50,6 +50,17 @@ struct edge{
 };
 
 /**
+ * Node of graph
+ */
+struct node{
+    int id;
+    std::string name;
+    double latitude;
+    double longitude;
+    std::string airport_code;
+};
+
+/**
 * Function generates an unordered map that contains an ID and a name of an airport, theoretically
 */
 std::unordered_map<int, std::string> PopulateIdToName(std::fstream& airline_file_);
