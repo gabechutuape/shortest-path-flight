@@ -88,3 +88,6 @@ with testing other airports, it's very difficult to try new tests. You would nee
 In terms of testing FindLandMarkPath, I simply wanted to see if it properly determined a path through ORD -> PVG -> MNL if it was given PVG as the required intermediate destination, as opposed to NRT.
 FindLandMarkPath simply runs FindShortestPath twice, and I wanted the test case to produce a double-ended queue of those airport IDs produced by FindShortestPath.  
 In the end, the code is slightly changed when copying from assembler.cpp/assembler.h to helper.cpp/helper.h, but in my opinion, it performs a successful test, and that's all I wanted.
+
+## Progress 12/12 (FINAL) (rchaud9)
+Recorded and finalized the presentation of our project. Overall went well. 

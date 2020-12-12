@@ -19,3 +19,6 @@ The program has error handling for different cases, such as if you enter an airp
 
 ![Image of error for no route](https://cdn.discordapp.com/attachments/574865675907235862/787201391809921024/unknown.png "No route found")
 
+[![Image/link to YT video](https://img.youtube.com/vi/rFdMSAOskzM/0.jpg)](https://www.youtube.com/watch?v=rFdMSAOskzM&feature=youtu.be)
+
+
