@@ -11,22 +11,18 @@
 #ifndef ASSEMBLER_H
 #define ASSEMBLER_H
 
-/*
-BUILDUP/BREAKDOWN
---------------------------------------------------------------------------------------
-Probably have some form of constructor 
-Probably have a default constructor as well just to be safe
-Probably have some form of destructor
---------------------------------------------------------------------------------------
-FUNCTIONS
---------------------------------------------------------------------------------------
-P1: DATA PROCESSING
--Have something that reads the file data
--Have something that puts it in a format we can use (Hashing?)
-P2: ACTUAL STUFF
--Algorithm stuff. Will theorize later. Right now lets just get first two parts done
--------------------------------------------------------------------------------------
-*/
+/**
+ * 
+ * rchaud9, gfc2, dimitar3
+ * Dec 2020
+ * 
+ * assembler.h and assembler.cpp hold all functions necessary for project specification.
+ * This includes functions for grabbing data from CSV files, functions for sorting that data
+ * into maps and graphs, functions for traversing these graphs to find paths through them,
+ * and functions to output a flight trip in the command line.
+ * 
+ */
+
 struct node{
     int id;
     std::string name;

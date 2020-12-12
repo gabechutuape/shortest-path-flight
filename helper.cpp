@@ -8,6 +8,19 @@
 #include <unordered_set>
 #include <iostream>
 
+/**
+ * 
+ * rchaud9, gfc2, dimitar3
+ * Dec 2020
+ * 
+ * The purpose of the helper.h and helper.cpp file is to provide versions of the functions
+ * used in assembler.cpp that are testable. We needed this file because some private functions
+ * are not accessible via our tests-part1.cpp, or some function outputs do not match what
+ * are necessary for testing, but are necessary for project output. Both helper.cpp and helper.h
+ * are copies of assembler.h with small variations to the code for the sake of testing our functions.
+ * 
+ */
+
 using namespace std;
 
 vector<string> ParseLine(const string &line){
