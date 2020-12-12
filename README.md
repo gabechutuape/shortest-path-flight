@@ -1,25 +1,21 @@
-# Project Goals (rchaud9 - gfc2 - dimitar3)
+# Shortest Path Flight Program
+This program uses data from https://openflights.org/data.html to print an itinerary of flights to take in order to get from one airport to another.
 
-### Dataset
-- Our dataset of interest is the OpenFlights open source dataset of flight routes and
-airports, from ​ https://openflights.org/data
-### Abstract Goal
-- Our goal, at an abstract level of explanation, is to use this dataset of flight routes
-and airports to discover shortest paths between airports.  
-### Traversal and Algorithms
-- Our chosen traversal for this project is the breadth first search. This is because it
-has greater efficacy in finding the shortest path between vertices compared to the
-depth first search. This idea presents itself as applicable to our project
-specifications, so we chose it.
-- Our chosen algorithms are Dijkstra’s algorithm and the Landmark Path algorithm.
-	- We chose Dijkstra’s algorithm because, in searching for algorithms that
-	would be appropriate for our goal of finding shortest paths between
-	airports, our group members showed more familiarity with Dijkstra’s
-	algorithm as opposed to the alternative Floyd-Warshall algorithm. We find
-	its considerably low complexity favorable for our goal.
-	- We chose the Landmark Path algorithm because, upon inspection, it
-	provides functionality that accomplishes our goal. Additionally, it provides
-	an interesting perspective on the data in the form of requiring an
-	intermediary airport of travel in between getting from one airport to
-	another. This could be abstracted into the idea of stopping in a country to
-	visit a relative while making a business trip.
+## Usage
+Using our program requires usage of the command line. To use the program, simply clone the repo and run make. After successfully compiling the program, run ./shortestpathflight.
+```
+make
+./shortestpathflight
+```
+Upon running the executable, you will be prompted for an intermediate airport destination to be considered for your trip itinerary. Respond with Y if you wish to input one, and N if you do not care for a specific intermediate destination.
+Afterwards, simply enter the IATA codes of your desired start, end, and optional intermediate airports.  
+The program will print an itinerary for you to follow, as well as different airlines you can take from one airport to another if there are multiple options available.
+
+![Image of program](https://media.discordapp.net/attachments/574865675907235862/787200465989140520/unknown.png "Landmark process")
+
+The program has error handling for different cases, such as if you enter an airport that cannot be found, or if no route can be found between two airports.
+
+![Image of error for no airport found](https://media.discordapp.net/attachments/574865675907235862/787202039242948608/unknown.png "No ending airport found")
+
+![Image of error for no route](https://cdn.discordapp.com/attachments/574865675907235862/787201391809921024/unknown.png "No route found")
+
